@@ -1,4 +1,5 @@
 ./env
 env/
-
-test.py
+./env/
+.env/
+.test.py
