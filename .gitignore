@@ -3,4 +3,5 @@
 ./env/
 .env/
 .test.py
-test.py
+.test.py
+.requests.py
