@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 
-raw_data = pd.read_csv('data.csv')
+raw_data = pd.read_csv('./data/data.csv')
 
 
 # # Preprocessing
@@ -210,6 +210,29 @@ def categorical_encoding(data_no_multicollinearity:pd.DataFrame) -> pd.DataFrame
     data_no_pro_type = data_post_code.drop(columns=['Immoweb ID', 'Property type', 'price/m2'])
     data_with_dummies = pd.get_dummies(data_no_pro_type, drop_first=True)
     df_reg = data_with_dummies.copy()
+    return df_reg
+
+
+def start_dataframe():
+
+    df = manage_raw_data(raw_data)
+    df = change_kitchen(df)
+    df = change_furnished(df)
+    df = change_bedrooms(df)
+    df = change_swimming_pool(df)
+    df = change_surface_plot(df)
+    df = change_area(df)
+    df = change_number_frontages(df)
+    df = change_garden(df)
+    df = change_terrace(df)
+    df = create_new_column(df)
+
+    data_cleaned = manage_outliers(df)
+
+    data_no_multicollinearity = multicolinearity(data_cleaned)
+
+    df_reg = categorical_encoding(data_no_multicollinearity)
+
     return df_reg
 
 

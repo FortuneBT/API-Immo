@@ -36,7 +36,7 @@ def linear_regression_model(df_reg:pd.DataFrame) -> pd.DataFrame:
     y_hat = regressor.predict(X_train)
     rmse = (np.sqrt(MSE(y_train, y_hat)))
     r2 = r2_score(y_train, y_hat)
-    return y_hat
+    return regressor
 
 
 

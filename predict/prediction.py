@@ -29,7 +29,7 @@ def predict_linear_regression(regressor,df_reg):
     reg_summary
     y_hat_test = regressor.predict(X_test)
 
-    return y_hat_test
+    return y_hat_test,r2
 
 
 def predict_polynomial_regression_model(poly_model,df_reg,X_train_poly,poly_features):
