@@ -147,6 +147,12 @@ def create_new_column(df:pd.DataFrame) -> pd.DataFrame:
     df['price/m2'] = (df['Price']/ df['Living area']).round(2)
     return df
 
+def create_new_column_client(df:pd.DataFrame,df_reg:pd.DataFrame) -> pd.DataFrame:
+    # ### Creating new Columns
+    # #### Price per m2
+    df['price/m2'] = (df['Price']/ df['Living area']).round(2)
+    df_reg['price/m2'] = (df_reg['Price']/ df_reg['Living area']).round(2)
+    return df,df_reg
 
 def manage_outliers(df:pd.DataFrame) -> pd.DataFrame:
     df.drop(['Furnished'], axis = 1)
@@ -185,6 +191,7 @@ def manage_outliers(df:pd.DataFrame) -> pd.DataFrame:
 
     return data_cleaned
 
+
 def multicolinearity(data_cleaned:pd.DataFrame) -> pd.DataFrame:
     # ### Multicolineratiy
     variables = data_cleaned[['Building condition', 'Kitchen type', 'Bedrooms',
@@ -199,7 +206,9 @@ def multicolinearity(data_cleaned:pd.DataFrame) -> pd.DataFrame:
 
 def categorical_encoding(data_no_multicollinearity:pd.DataFrame) -> pd.DataFrame:
     # ### Categorical data encoding
+
     data_no_multicollinearity['Post code'].astype(str)
+    
     post_code_stat = data_no_multicollinearity['Post code'].value_counts(ascending=False)
     """print('Total no of Poste code where data points are more than 10 = %s' % (len(post_code_stat[post_code_stat > 10])))
     print('Total no of Poste code where data points are less than 10 = %s' % (len(post_code_stat[post_code_stat <= 10])))
@@ -211,6 +220,28 @@ def categorical_encoding(data_no_multicollinearity:pd.DataFrame) -> pd.DataFrame
     data_with_dummies = pd.get_dummies(data_no_pro_type, drop_first=True)
     df_reg = data_with_dummies.copy()
     return df_reg
+
+def categorical_encoding_client(data_no_multicollinearity:pd.DataFrame,df:pd.DataFrame) -> pd.DataFrame:
+    # ### Categorical data encoding
+
+    data = data_no_multicollinearity
+
+    data_no_multicollinearity = data
+    mydata = df.drop(columns=['Immoweb ID', 'Property type'])
+    df = pd.get_dummies(mydata, drop_first=True)
+
+    df_reg = data_no_multicollinearity
+
+    big_table_list = list(df_reg.columns)
+    small_table_list = list(df.columns)
+    for big_elem in big_table_list:
+        for small_elem in small_table_list:
+            if big_elem == small_elem:
+                df_reg[big_elem].iloc[-1] = df.iloc[0][small_elem]
+
+
+    return df_reg,df_reg.iloc[-1]
+
 
 
 def start_dataframe():
@@ -235,4 +266,26 @@ def start_dataframe():
 
     return df_reg
 
+
+def preprocess(df):
+
+    df_reg = start_dataframe()
+
+    df = manage_raw_data(df)
+    df = change_kitchen(df)
+    df = change_furnished(df)
+    df = change_bedrooms(df)
+    df = change_swimming_pool(df)
+    df = change_surface_plot(df)
+    df = change_area(df)
+    df = change_number_frontages(df)
+    df = change_garden(df)
+    df = change_terrace(df)
+    df = create_new_column(df)
+
+    #data_cleaned = manage_outliers(df)
+    #data_no_multicollinearity = multicolinearity(data_cleaned)
+    df_reg,X = categorical_encoding_client(df_reg,df)
+
+    return df_reg,X
 

@@ -7,6 +7,8 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import PolynomialFeatures
 
+from model.mymodel import features_targets_client
+
 
 def features_targets(df_reg:pd.DataFrame):
     # Declare the features and targets
@@ -17,9 +19,20 @@ def features_targets(df_reg:pd.DataFrame):
     return [X_train, X_test, y_train, y_test,X, y]
 
 
+def features_targets_client(df_reg:pd.DataFrame):
+    # Declare the features and targets
+    y = df_reg['log_price']
+    X = df_reg.drop(['log_price'], axis =1)
+    #X = df_reg
+    
+    # ### Splitting the data set
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=365)
+    return [X_train, X_test, y_train, y_test,X, y]
+
+
 def predict_linear_regression(regressor,df_reg):
     # model evaluation for testing set
-    X_train, X_test, y_train, y_test,X, y = features_targets(df_reg)
+    X_train, X_test, y_train, y_test, X, y = features_targets(df_reg)
     y_test_predict = regressor.predict(X_test)
     rmse = (np.sqrt(MSE(y_test, y_test_predict)))
     r2 = r2_score(y_test, y_test_predict)
@@ -49,3 +62,24 @@ def predict_polynomial_regression_model(poly_model,df_reg,X_train_poly,poly_feat
     r2_test = r2_score(y_test, y_test_predict)
     
     return y_test_predict
+
+
+def predict_linear_regression_client(features,X_value):
+    # model evaluation for testing set
+    #X_train, X_test, y_train, y_test,X, y = features_targets_client(df_reg)
+    #X = df.to_numpy()
+    X_train, X_test, y_train, y_test = features
+    #X = X_value
+    """X = X.drop(labels=["log_price"])
+    y_test_predict = regressor.predict(X_test)
+    rmse = (np.sqrt(MSE(y_test, y_test_predict)))
+    r2 = r2_score(y_test, y_test_predict)
+    regressor.coef_
+    reg_summary = pd.DataFrame(X.values, columns=['Features'])
+    reg_summary['Weights'] = regressor.coef_
+    reg_summary"""
+    regressor = LinearRegression()
+    regressor.fit(X_train, y_train)
+    y_hat_test = regressor.predict(X_test)
+
+    return y_hat_test[0]   
