@@ -25,7 +25,6 @@ def validate_json(mydata):
     try:
         if area != None:
             validate(instance=area, schema={"type":"integer"})
-
     except:
       messages.append("In your json data, the label named area is suppose to be an integer")
     try:
@@ -98,26 +97,5 @@ def validate_json(mydata):
 
     return messages
 
-#"building-state": Optional["NEW","GOOD","TO RENOVATE","JUST RENOVATED","TO REBUILD"]
-#"property-type": "APARTMENT" | "HOUSE" | "OTHERS"
-data = {
-  "data": {
-    "area": int,
-    "property-type": str,
-    "rooms-number": int,
-    "zip-code": int,
-    "land-area": Optional[int],
-    "garden": Optional[bool],
-    "garden-area": Optional[int],
-    "equipped-kitchen": Optional[bool],
-    "full-address": Optional[str],
-    "swimming-pool": Optional[bool],
-    "furnished": Optional[bool],
-    "open-fire": Optional[bool],
-    "terrace": Optional[bool],
-    "terrace-area": Optional[int],
-    "facades-number": Optional[int],
-    "building-state": Optional[str]
-  }
-}
+
 

@@ -13,17 +13,20 @@ api = Api(app)
 
 class HelloWorld(Resource):
   def get(self):
-    return {"message":"Hello World"}
+    #return {"message":"Hello World"}
+    return "Welcome to our API - house predict"
 
 class Predict(Resource):
 
   def get(self):
     return {"message":"Using machin learning to predict the price of the house"}
+    
 
   def post(self):
     myjson:json= request.get_json(force=True)
     mydata:Dict = dict(myjson)
     messages:List[str] = []
+    print(mydata)
     messages = validate_json(mydata)
     if len(messages) == 0:
       return {"response":mydata["data"]["price"]}
