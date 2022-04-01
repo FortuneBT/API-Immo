@@ -4,6 +4,7 @@ from flask_restful import Api,Resource
 from typing import Optional,List,Dict
 from jsonschema import validate
 from validation import validate_json
+import os
 
 
 app = Flask(__name__)
@@ -41,4 +42,6 @@ class Predict(Resource):
 api.add_resource(HelloWorld,"/")
 api.add_resource(Predict,"/predict/")
 
-app.run(debug=True)
+if __name__ == "__main__":
+  port = int(os.environ.get('PORT', 5000))
+  app.run(host="0.0.0.0", threaded=True, port=port)

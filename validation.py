@@ -23,7 +23,9 @@ def validate_json(mydata):
     messages:List = []
     
     try:
-      validate(instance=area, schema={"type":"integer"})
+        if area != None:
+            validate(instance=area, schema={"type":"integer"})
+
     except:
       messages.append("In your json data, the label named area is suppose to be an integer")
     try:
