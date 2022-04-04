@@ -5,7 +5,14 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
 
-def linear_regression_model(df_reg: pd.DataFrame):
+def linear_regression_model(df_reg: pd.DataFrame) -> None:
+    """
+    This fonction will create a model of a linear regression.
+    Then split it and train it.
+    The model will be saved in 'model.joblib' file.
+    X is the target.
+    y is what it is left The dataset
+    """
     # ## Linear Regression Model
     # Declare the features and targets
     X = df_reg.drop(["log_price"], axis=1).to_numpy()

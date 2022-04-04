@@ -16,17 +16,47 @@ api = Api(app)
 
 class HelloWorld(Resource):
     def get(self):
-        # return {"message":"Hello World"}
-        return "Welcome to our API - house predict"
+
+        return "The server is alive."
 
 
 class Predict(Resource):
+    "This class is a new ressource for this API. It will manage the prediction part"
+
     def get(self):
-        return {"message": "Using machin learning to predict the price of the house"}
+        """
+        This function return a dictionary to help the user to know what should be assign
+        """
+        return {
+            "0": {
+                "area": int,
+                "property-type": str,
+                "rooms-number": int,
+                "zip-code": int,
+                "land-area": Optional[int],
+                "garden": Optional[bool],
+                "garden-area": Optional[int],
+                "equipped-kitchen": Optional[bool],
+                "full-address": Optional[str],
+                "swimming-pool": Optional[bool],
+                "furnished": Optional[bool],
+                "open-fire": Optional[bool],
+                "terrace": Optional[bool],
+                "terrace-area": Optional[int],
+                "facades-number": Optional[int],
+                "building-state": Optional[str],
+            }
+        }
 
     def post(self):
+        """
+        This function will manage the post request in the predict ressource.
+        it wiil give the prediction if the format is correct else an error message
+        """
         myjson: json = request.get_json(force=True)
+        # convert the json format in a dictionary
         mydata: Dict = dict(myjson)
+        # create a list to save all the messages
         messages: List[str] = []
         messages, mydata = validate_json(mydata)
         if len(messages) == 0:
@@ -39,7 +69,10 @@ class Predict(Resource):
 
 
 def convert_input(mydata: Dict) -> pd.Series:
-
+    """
+    This function will convert the input of the user and create new label in
+    the dictionary if it doesn't exist
+    """
     living_area: str = "Living area"  # "area":int
     property_type: str = "Property type"  # "property-type": str
     bedrooms: int = "Bedrooms"  # "rooms-number": int
@@ -48,6 +81,7 @@ def convert_input(mydata: Dict) -> pd.Series:
     data_encoded = {0: {}}
 
     columns = raw_data.columns
+    # list of label that exist in the dataset
     my_list = [
         "Immoweb ID",
         "Property type",
@@ -120,11 +154,13 @@ def convert_input(mydata: Dict) -> pd.Series:
                 if elem == "Garden orientation":
                     data_encoded[0][elem] = 0
 
+    # assign every data in a new dataframe
     df = pd.DataFrame.from_dict(data_encoded, orient="index")
 
     return df
 
 
+# add ressource to the api
 api.add_resource(HelloWorld, "/")
 api.add_resource(Predict, "/predict/")
 

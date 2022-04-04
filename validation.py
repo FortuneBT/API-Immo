@@ -2,8 +2,11 @@ from jsonschema import validate
 from typing import List, Dict, Optional
 
 
-def validate_json(mydata):
+def validate_json(mydata: Dict) -> List[list, dict]:
+    """
+    This function validate the json format that is send by the user
 
+    """
     area = mydata["0"]["area"]
     property_type = mydata["0"]["property-type"]
     rooms_number = mydata["0"]["rooms-number"]

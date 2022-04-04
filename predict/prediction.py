@@ -2,7 +2,12 @@ import numpy as np
 from joblib import load
 
 
-def predict_linear_regression(X):
+def predict_linear_regression(X) -> float:
+    """
+    This fonction will predict the price of the house that the user gave
+    to the API.
+    X is the pandas.Serie that was previously convert from the user input
+    """
     X_final = X.drop(labels=["log_price"])
     # model evaluation for testing set
     input = np.array(X_final.values).reshape(1, -1)
