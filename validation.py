@@ -2,7 +2,7 @@ from jsonschema import validate
 from typing import List, Dict, Optional
 
 
-def validate_json(mydata: Dict) -> List[list, dict]:
+def validate_json(mydata: Dict) -> List:
     """
     This function validate the json format that is send by the user
 
