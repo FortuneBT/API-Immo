@@ -1,12 +1,9 @@
 import joblib
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error as MSE
-from sklearn.metrics import r2_score
 from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import PolynomialFeatures
+
 
 
 def linear_regression_model(df_reg:pd.DataFrame):
@@ -23,7 +20,7 @@ def linear_regression_model(df_reg:pd.DataFrame):
     scaler.fit(X_train)
     scaler.transform(X_train)
     regressor = LinearRegression().fit(X_train, y_train)
-
+    #save the model in the file
     joblib.dump(regressor, "./model/model.joblib")
 
 
