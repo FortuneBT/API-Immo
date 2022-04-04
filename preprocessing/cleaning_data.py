@@ -221,13 +221,13 @@ def categorical_encoding(data_no_multicollinearity:pd.DataFrame) -> pd.DataFrame
     df_reg = data_with_dummies.copy()
     return df_reg
 
-def categorical_encoding_client(data_no_multicollinearity:pd.DataFrame,df:pd.DataFrame) -> pd.DataFrame:
+def categorical_encoding_client(big_dataframe:pd.DataFrame,small_dataframe:pd.DataFrame) -> pd.DataFrame:
     # ### Categorical data encoding
+    df = small_dataframe
+    data_no_multicollinearity = big_dataframe
 
-    data = data_no_multicollinearity
-
-    data_no_multicollinearity = data
     mydata = df.drop(columns=['Immoweb ID', 'Property type'])
+    
     df = pd.get_dummies(mydata, drop_first=True)
 
     df_reg = data_no_multicollinearity
@@ -269,7 +269,7 @@ def start_dataframe():
 
 def preprocess(df):
 
-    df_reg = start_dataframe()
+    df_reg = start_dataframe() #raw data for training
 
     df = manage_raw_data(df)
     df = change_kitchen(df)

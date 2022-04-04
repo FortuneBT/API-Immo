@@ -26,10 +26,9 @@ class Predict(Resource):
     myjson:json= request.get_json(force=True)
     mydata:Dict = dict(myjson)
     messages:List[str] = []
-    print(mydata)
-    messages = validate_json(mydata)
+    messages,mydata = validate_json(mydata)
     if len(messages) == 0:
-      return {"response":mydata["data"]["price"]}
+      return {"prediction":350000}
     else:
       return {"Error message(s)":messages}
 

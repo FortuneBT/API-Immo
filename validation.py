@@ -2,7 +2,7 @@ from jsonschema import validate
 from typing import List,Dict,Optional
 
 def validate_json(mydata):
-
+  
     area = mydata["data"]["area"]
     property_type = mydata["data"]["property-type"]
     rooms_number = mydata["data"]["rooms-number"]
@@ -24,78 +24,120 @@ def validate_json(mydata):
     
     try:
         if area != None:
-            validate(instance=area, schema={"type":"integer"})
+          validate(instance=area, schema={"type":"integer"})
+        else:
+          messages.append("In your json data, the label named 'area' is 'None'! You need a value")
     except:
       messages.append("In your json data, the label named area is suppose to be an integer")
     try:
-      validate(instance=property_type, schema={"type":"string"})
+      if property_type != None:
+        validate(instance=property_type, schema={"type":"string"})
+      else:
+          messages.append("In your json data, the label named 'property typed' is 'None'! You need a value")
     except:
       messages.append("In your json data, the label named 'property typed' is suppose to be an string")
     try:
-      validate(instance=rooms_number, schema={"type":"integer"})
+      if rooms_number != None:
+        validate(instance=rooms_number, schema={"type":"integer"})
+      else:
+          messages.append("In your json data, the label named 'rooms number' is 'None'! You need a value")
     except:
       messages.append("In your json data, the label named 'rooms number' is suppose to be an integer")
     try:
-      validate(instance=zip_code, schema={"type":"integer"})
+      if zip_code != None:
+        validate(instance=zip_code, schema={"type":"integer"})
+      else:
+          messages.append("In your json data, the label named 'zip code' is 'None'! You need a value")
     except:
       messages.append("In your json data, the label named 'zip code' is suppose to be an integer")
     
     try:
-      validate(instance=land_area, schema={"type":"integer"})
+      if land_area != None:
+        validate(instance=land_area, schema={"type":"integer"},)
+      else:
+        mydata["data"]["land-area"] = 0
     except:
       messages.append("In your json data, the label named 'land area' is suppose to be an integer")
     
     try:
-      validate(instance=garden, schema={"type":"boolean"})
+      if garden != None:
+        validate(instance=garden, schema={"type":"boolean",})
+      else:
+        mydata["data"]["garden"] = False
     except:
       messages.append("In your json data, the label named 'garden' is suppose to be an boolean")
-    
     try:
-      validate(instance=garden_area, schema={"type":"integer"})
+      if garden_area != None:
+        validate(instance=garden_area, schema={"type":"integer"})
+      else:
+        mydata["data"]["garden-area"] = 0
     except:
       messages.append("In your json data, the label named 'garden area' is suppose to be an integer")
-    
     try:
-      validate(instance=equipped_kitchen, schema={"type":"boolean"})
+      if equipped_kitchen != None:
+        validate(instance=equipped_kitchen, schema={"type":"boolean"})
+      else:
+        mydata["data"]["equipped-kitchen"] = False
     except:
       messages.append("In your json data, the label named 'equipped kitchen' is suppose to be an boolean")
-    
     try:
-      validate(instance=full_address, schema={"type":"string"})
+      if full_address != None:
+        validate(instance=full_address, schema={"type":"string"})
+      else:
+        mydata["data"]["full-address"] = 0
     except:
       messages.append("In your json data, the label '-full address' area is suppose to be an string")
     try:
-      validate(instance=swimming_pool, schema={"type":"boolean"})
+      if swimming_pool != None:
+        validate(instance=swimming_pool, schema={"type":"boolean"})
+      else:
+        mydata["data"]["swimming-pool"] = False
     except:
       messages.append("In your json data, the label 'swimming pool' area is suppose to be an boolean")
-
     try:
-      validate(instance=furnished, schema={"type":"boolean"})
+      if furnished != None:
+        validate(instance=furnished, schema={"type":"boolean"})
+      else:
+        mydata["data"]["furnished"] = False
     except:
       messages.append("In your json data, the label named 'furnished' is suppose to be an boolean")
-    
     try:
-      validate(instance=open_fire, schema={"type":"boolean"})
+      if open_fire != None:
+        validate(instance=open_fire, schema={"type":"boolean"})
+      else:
+        mydata["data"]["open-fire"] = False
     except:
       messages.append("In your json data, the label named 'open fire' is suppose to be an boolean")
     try:
-      validate(instance=terrace, schema={"type":"boolean"})
+      if terrace != None:
+        validate(instance=terrace, schema={"type":"boolean"})
+      else:
+        mydata["data"]["terrace"] = False
     except:
       messages.append("In your json data, the label named 'terrace' is suppose to be an boolean")
     try:
-      validate(instance=terrace_area, schema={"type":"integer"})
+      if terrace_area != None:
+        validate(instance=terrace_area, schema={"type":"integer"})
+      else:
+        mydata["data"]["terrace-area"] = 0
     except:
       messages.append("In your json data, the label named 'terrace area' is suppose to be an integer")
     try:
-      validate(instance=facades_number, schema={"type":"integer"})
+      if facades_number != None:
+        validate(instance=facades_number, schema={"type":"integer"})
+      else:
+        mydata["data"]["facades-number"] = 0
     except:
       messages.append("In your json data, the label named 'facades number' is suppose to be an integer")
     try:
-      validate(instance=building_state, schema={"type":"string"})
+      if building_state != None:
+        validate(instance=building_state, schema={"type":"string"})
+      else:
+        mydata["data"]["building-state"] = "Unknown"
     except:
       messages.append("In your json data, the label named 'building state is suppose to be an string")
 
-    return messages
+    return messages,mydata
 
 
 
