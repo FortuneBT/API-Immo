@@ -41,6 +41,8 @@ class Predict(Resource):
 }
 """
 
+
+
 api.add_resource(HelloWorld,"/")
 api.add_resource(Predict,"/predict/")
 

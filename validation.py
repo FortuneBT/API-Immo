@@ -140,4 +140,3 @@ def validate_json(mydata):
     return messages,mydata
 
 
-

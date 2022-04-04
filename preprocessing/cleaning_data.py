@@ -239,7 +239,7 @@ def categorical_encoding_client(big_dataframe:pd.DataFrame,small_dataframe:pd.Da
             if big_elem == small_elem:
                 df_reg[big_elem].iloc[-1] = df.iloc[0][small_elem]
 
-
+    
     return df_reg,df_reg.iloc[-1]
 
 
@@ -286,6 +286,7 @@ def preprocess(df):
     #data_cleaned = manage_outliers(df)
     #data_no_multicollinearity = multicolinearity(data_cleaned)
     df_reg,X = categorical_encoding_client(df_reg,df)
+    df_reg.to_csv("new_data.csv",index=False)
 
     return df_reg,X
 
