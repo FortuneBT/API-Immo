@@ -29,22 +29,22 @@ class Predict(Resource):
         """
         return {
             "0": {
-                "area": int,
-                "property-type": str,
-                "rooms-number": int,
-                "zip-code": int,
-                "land-area": Optional[int],
-                "garden": Optional[bool],
-                "garden-area": Optional[int],
-                "equipped-kitchen": Optional[bool],
-                "full-address": Optional[str],
-                "swimming-pool": Optional[bool],
-                "furnished": Optional[bool],
-                "open-fire": Optional[bool],
-                "terrace": Optional[bool],
-                "terrace-area": Optional[int],
-                "facades-number": Optional[int],
-                "building-state": Optional[str],
+                "area": "int",
+                "property-type": "str",
+                "rooms-number": "int",
+                "zip-code": "int",
+                "land-area":"Optional[int]",
+                "garden": "Optional[bool]",
+                "garden-area":" Optional[int]",
+                "equipped-kitchen": "Optional[bool]",
+                "full-address": "Optional[str]",
+                "swimming-pool": "Optional[bool]",
+                "furnished": "Optional[bool]",
+                "open-fire": "Optional[bool]",
+                "terrace": "Optional[bool]",
+                "terrace-area":" Optional[int]",
+                "facades-number":" Optional[int]",
+                "building-state": "Optional[str]",
             }
         }
 
