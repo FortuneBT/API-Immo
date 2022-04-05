@@ -15,7 +15,7 @@ api = Api(app)
 
 
 class HelloWorld(Resource):
-    def get(self):
+    def get(self) -> str:
 
         return "The server is alive."
 
@@ -23,7 +23,7 @@ class HelloWorld(Resource):
 class Predict(Resource):
     "This class is a new ressource for this API. It will manage the prediction part"
 
-    def get(self):
+    def get(self) -> Dict:
         """
         This function return a dictionary to help the user to know what should be assign
         """
@@ -48,7 +48,7 @@ class Predict(Resource):
             }
         }
 
-    def post(self):
+    def post(self) -> Dict:
         """
         This function will manage the post request in the predict ressource.
         it wiil give the prediction if the format is correct else an error message

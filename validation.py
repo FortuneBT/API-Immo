@@ -1,4 +1,5 @@
 from jsonschema import validate
+import jsonschema
 from typing import List, Dict, Optional
 
 
@@ -26,16 +27,18 @@ def validate_json(mydata: Dict) -> List:
 
     messages: List = []
 
+
     try:
         if area != None:
-            validate(instance=area, schema={"type": "integer"})
+            validate(instance=area, schema={"type":"integer"})
         else:
             messages.append(
                 "In your json data, the label named 'area' is 'None'! You need a value"
             )
-    except:
+    except jsonschema.ValidationError as e:
         messages.append(
-            "In your json data, the label named area is suppose to be an integer"
+            #"In your json data, the label named area is suppose to be an integer"
+            e.absolute_path
         )
     try:
         if property_type != None:
