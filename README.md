@@ -29,8 +29,8 @@ https://api-house-fortune.herokuapp.com/predict
         "land-area": Optional[int],
         "garden": Optional[bool],
         "garden-area": Optional[int],
+        "garder-orientation": Optional[str]
         "equipped-kitchen": Optional[bool],
-        "full-address": Optional[str],
         "swimming-pool": Optional[bool],
         "furnished": Optional[bool],
         "open-fire": Optional[bool],
