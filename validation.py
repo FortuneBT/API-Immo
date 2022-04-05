@@ -15,8 +15,8 @@ def validate_json(mydata: Dict) -> List:
     land_area = mydata["0"]["land-area"]
     garden = mydata["0"]["garden"]
     garden_area = mydata["0"]["garden-area"]
+    garden_orientation = mydata["0"]["garden-orientation"]
     equipped_kitchen = mydata["0"]["equipped-kitchen"]
-    full_address = mydata["0"]["full-address"]
     swimming_pool = mydata["0"]["swimming-pool"]
     furnished = mydata["0"]["furnished"]
     open_fire = mydata["0"]["open-fire"]
@@ -111,6 +111,15 @@ def validate_json(mydata: Dict) -> List:
             "In your json data, the label named 'garden area' is suppose to be an integer"
         )
     try:
+        if garden_orientation != None:
+            validate(instance=garden_area, schema={"type": "string"})
+        else:
+            mydata["0"]["garden-orientation"] = 0
+    except:
+        messages.append(
+            "In your json data, the label named 'garden orientation' is suppose to be an string"
+        )
+    try:
         if equipped_kitchen != None:
             validate(instance=equipped_kitchen, schema={"type": "boolean"})
         else:
@@ -118,15 +127,6 @@ def validate_json(mydata: Dict) -> List:
     except:
         messages.append(
             "In your json data, the label named 'equipped kitchen' is suppose to be an boolean"
-        )
-    try:
-        if full_address != None:
-            validate(instance=full_address, schema={"type": "string"})
-        else:
-            mydata["0"]["full-address"] = 0
-    except:
-        messages.append(
-            "In your json data, the label '-full address' area is suppose to be an string"
         )
     try:
         if swimming_pool != None:

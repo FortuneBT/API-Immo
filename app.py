@@ -36,8 +36,8 @@ class Predict(Resource):
                 "land-area":"Optional[int]",
                 "garden": "Optional[bool]",
                 "garden-area":" Optional[int]",
+                "garden-orientation":" Optional[int]",
                 "equipped-kitchen": "Optional[bool]",
-                "full-address": "Optional[str]",
                 "swimming-pool": "Optional[bool]",
                 "furnished": "Optional[bool]",
                 "open-fire": "Optional[bool]",
@@ -114,45 +114,46 @@ def convert_input(mydata: Dict) -> pd.Series:
                 or label != post_code
             ):
                 if elem == "Immoweb ID":
-                    data_encoded[0][elem] = 7921700
+                    data_encoded[0][elem] = 7921700 #to be the last row of the dataset
                 if elem == property_type:
                     data_encoded[0][property_type] = mydata["0"]["property-type"]
                 if elem == "property sub-type":
-                    data_encoded[0][elem] = "unknown"
+                    data_encoded[0][elem] = mydata["0"]["property sub-type"]
                 if elem == "Price":
-                    data_encoded[0][elem] = 0
+                    #not useful here and add the column to be the same as the dataset
+                    data_encoded[0][elem] = 0 
                 if elem == post_code:
                     data_encoded[0][post_code] = str(mydata["0"]["zip-code"])
                 if elem == "Building condition":
-                    data_encoded[0][elem] = "bad"
+                    data_encoded[0][elem] = mydata["0"]["building-state"]
                 if elem == "Kitchen type":
-                    data_encoded[0][elem] = "super equiped"
+                    data_encoded[0][elem] = mydata["0"]["equipped-kitchen"]
                 if elem == bedrooms:
                     data_encoded[0][bedrooms] = mydata["0"]["rooms-number"]
                 if elem == "Furnished":
-                    data_encoded[0][elem] = False
+                    data_encoded[0][elem] = mydata["0"]["furnished"]
                 if elem == "Terrace surface":
-                    data_encoded[0][elem] = 20
+                    data_encoded[0][elem] = mydata["0"]["terrace-area"]
                 if elem == "Tenement building":
-                    data_encoded[0][elem] = False
+                    data_encoded[0][elem] = None
                 if elem == "Number of frontages":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] = mydata["0"]["facades-number"]
                 if elem == "Swimming pool":
-                    data_encoded[0][elem] = True
+                    data_encoded[0][elem] = mydata["0"]["swimming-pool"]
                 if elem == "How many fireplaces?":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] = mydata["0"]["open-fire"]
                 if elem == "Garden":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] = mydata["0"]["garden"]
                 if elem == "Terrace":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] =mydata["0"]["terrace"]
                 if elem == "Surface of the plot":
-                    data_encoded[0][elem] = 350
+                    data_encoded[0][elem] = mydata["0"]["land-area"]
                 if elem == living_area:
                     data_encoded[0][living_area] = mydata["0"]["area"]
                 if elem == "Garden surface":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] = mydata["0"]["garden-area"]
                 if elem == "Garden orientation":
-                    data_encoded[0][elem] = 0
+                    data_encoded[0][elem] = mydata["0"]["garden-orientation"]
 
     # assign every data in a new dataframe
     df = pd.DataFrame.from_dict(data_encoded, orient="index")
@@ -165,5 +166,5 @@ api.add_resource(HelloWorld, "/")
 api.add_resource(Predict, "/predict/")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host="0.0.0.0", threaded=True, port=port)
